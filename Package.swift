@@ -4,25 +4,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "MathLibraryEx",
+    name: "MathLibEx",
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "MathLibraryEx",
-            targets: ["MathLibraryEx"]),
-    ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+            name: "MathLibEx",
+            targets: ["MathLibExTargets"]),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .target(
-            name: "MathLibraryEx",
-            dependencies: []),
-        .testTarget(
-            name: "MathLibraryExTests",
-            dependencies: ["MathLibraryEx"]),
+        .binaryTarget(name: "MathLibEx", path: "./Sources/MathLibEx.xcframework"),
+        .binaryTarget(name: "AdditionCalculator", path: "./Sources/AdditionCalculator.xcframework"),
+        .target(name: "MathLibExTargets", dependencies: [
+                    .target(name: "MathLibEx", condition: .when(platforms: [.iOS])),
+                    .target(name: "AdditionCalculator", condition: .when(platforms: [.iOS])),
+                    ],
+                    path:"./Sources/MathLibExTargets")
     ]
 )
